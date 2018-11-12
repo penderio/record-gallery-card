@@ -1,5 +1,5 @@
 {
-  "name": "record-gallery-card",
+  "name": "@cmds/record-gallery-card",
   "version": "0.1.0",
   "description": "Used for displaying a record as a gallery card.",
   "main": "lib/index.js",
@@ -24,9 +24,11 @@
     "@cmds/attachment-field": "^0.3.0",
     "@cmds/checkbox-field": "^0.2.0",
     "@cmds/link-to-another-record-field": "^0.2.0",
+    "@cmds/long-text-field": "^0.2.0",
     "@cmds/multiple-select-field": "^0.1.0",
     "@cmds/number-field": "^0.4.0",
     "@cmds/single-line-text-field": "^0.2.0",
+    "@cmds/single-select-field": "^0.1.0",
     "emotion": "^9.2.12",
     "lodash": "^4.17.11",
     "react-slick": "^0.23.2",

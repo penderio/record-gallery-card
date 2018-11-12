@@ -142,6 +142,41 @@ class Demo extends Component {
                                     name: 'Purple'
                                 }]
                             }
+                        }, {
+                            id: 'fld7',
+                            name: 'Color',
+                            typeId: 'singleSelect',
+                            options: {
+                                options: [{
+                                    id: 'opt1',
+                                    colorId: 'blue.base',
+                                    name: 'Blue'
+                                }, {
+                                    id: 'opt2',
+                                    colorId: 'green.base',
+                                    name: 'Green'
+                                }, {
+                                    id: 'opt3',
+                                    colorId: 'red.base',
+                                    name: 'Red'
+                                }, {
+                                    id: 'opt4',
+                                    colorId: 'yellow.base',
+                                    name: 'Yellow'
+                                }, {
+                                    id: 'opt5',
+                                    colorId: 'indigo.base',
+                                    name: 'Indigo'
+                                }, {
+                                    id: 'opt6',
+                                    colorId: 'purple.base',
+                                    name: 'Purple'
+                                }]
+                            }
+                        }, {
+                            id: 'fld8',
+                            name: 'Notes',
+                            typeId: 'longText'
                         }]}
                         getValue={({fieldId}) => {
                             const values = {
@@ -206,6 +241,12 @@ class Demo extends Component {
                                 },
                                 'fld6': {
                                     optionIds: ['opt1', 'opt2', 'opt3', 'opt4', 'opt5', 'opt6']
+                                },
+                                'fld7': {
+                                    optionId: 'opt5'
+                                },
+                                'fld8': {
+                                    longText: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
                                 }
                             }
                             return values[fieldId]

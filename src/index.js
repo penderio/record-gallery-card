@@ -8,8 +8,12 @@ import CheckboxField from '@cmds/checkbox-field'
 import SingleLineTextField from '@cmds/single-line-text-field'
 import AttachmentField from '@cmds/attachment-field'
 import MultipleSelectField from '@cmds/multiple-select-field'
+import SingleSelectField from '@cmds/single-select-field'
+import LongTextField from '@cmds/long-text-field'
 
 const fieldTypes = {
+    longText: LongTextField,
+    singleSelect: SingleSelectField,
     multipleSelect: MultipleSelectField,
     linkToAnotherRecord: LinkToAnotherRecordField,
     checkbox: CheckboxField,
@@ -19,6 +23,10 @@ const fieldTypes = {
 }
 
 const connectors = {
+    longText: ({longText}) => ({
+        value: longText
+    }),
+    singleSelect: value => value,
     multipleSelect: value => value,
     checkbox: ({checked}) => ({
         value: checked
@@ -31,6 +39,24 @@ const connectors = {
     number: ({number}) => ({
         value: number
     })
+}
+
+const heights = {
+    attachment: 30,
+    autonumber: 22,
+    checkbox: 22,
+    multipleCollaborator: 22,
+    collaborator: 22,
+    createdCollaborator: 22,
+    createdTime: 22,
+    date: 22,
+    linkToAnotherRecord: 22,
+    longText: 78,
+    multipleSelect: 22,
+    number: 22,
+    singleLineText: 22,
+    singleSelect: 22,
+    updatedTime: 22
 }
 
 export default class RecordGalleryCard extends React.Component {
@@ -70,6 +96,7 @@ export default class RecordGalleryCard extends React.Component {
 
                     const Field = fieldTypes[field.typeId]
                     const connector = connectors[field.typeId]
+                    const height = heights[field.typeId]
                     const value = this.props.getValue({
                         fieldId: field.id
                     })
@@ -110,7 +137,11 @@ export default class RecordGalleryCard extends React.Component {
                                     {field.name}
                                 </div>
                             </div>
-                            <div>
+                            <div
+                                style={{
+                                    height
+                                }}
+                            >
                                 <Field
                                     id={field.id}
                                     contextId={'recordGalleryCard'}
