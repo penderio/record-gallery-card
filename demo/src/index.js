@@ -110,7 +110,7 @@ class Demo extends Component {
                     <RecordGalleryCard
                         primaryFieldId={'fld1'}
                         coverFieldId={null}
-                        fieldConfig={[{
+                        fields={[{
                             id: 'fld1',
                             name: 'Name',
                             typeId: 'singleLineText'
@@ -144,7 +144,7 @@ class Demo extends Component {
                     <RecordGalleryCard
                         coverFieldId={'fld2'}
                         primaryFieldId={'fld1'}
-                        fieldConfig={[{
+                        fields={[{
                             id: 'fld1',
                             name: 'Name',
                             typeId: 'singleLineText'
@@ -177,7 +177,7 @@ class Demo extends Component {
                     <RecordGalleryCard
                         coverFieldId={'fld10'}
                         primaryFieldId={'fld1'}
-                        fieldConfig={[{
+                        fields={[{
                             id: 'fld1',
                             name: 'Name',
                             typeId: 'singleLineText',
@@ -280,7 +280,7 @@ class Demo extends Component {
                             name: 'Attachments',
                             typeId: 'attachment'
                         }]}
-                        fields={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9', 'fld10']}
+                        fieldVisibility={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9', 'fld10']}
                         valueGetter={({fieldId}) => {
 
                             const cells = {

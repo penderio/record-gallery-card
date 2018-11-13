@@ -1,5 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {css} from 'emotion'
+import sum from 'lodash/sum'
 import CoverField from './CoverField'
 import RecordTitle from './RecordTitle'
 import LinkToAnotherRecordField from '@cmds/link-to-another-record-field'
@@ -10,6 +12,11 @@ import AttachmentField from '@cmds/attachment-field'
 import MultipleSelectField from '@cmds/multiple-select-field'
 import SingleSelectField from '@cmds/single-select-field'
 import LongTextField from '@cmds/long-text-field'
+
+const COVER_FIELD_HEIGHT = 180
+const PRIMARY_FIELD_HEIGHT = 32
+const FIELD_WRAP_HEIGHT = 31 // spacing around a field
+const CARD_BOTTOM_PADDING = 10
 
 const fieldTypes = {
     longText: LongTextField,
@@ -49,7 +56,7 @@ const valueParsers = {
     })
 }
 
-const heights = {
+const FIELD_HEIGHTS = {
     attachment: 30,
     autonumber: 22,
     checkbox: 22,
@@ -69,11 +76,68 @@ const heights = {
 
 export default class RecordGalleryCard extends React.Component {
 
+    static propTypes = {
+        primaryFieldId: PropTypes.string.isRequired,
+        coverFieldId: PropTypes.string,
+        valueGetter: PropTypes.func.isRequired,
+        fields: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                name: PropTypes.string.isRequired,
+                typeId: PropTypes.oneOf([
+                    'attachment',
+                    'autonumber',
+                    'checkbox',
+                    'multipleCollaborator',
+                    'collaborator',
+                    'createdCollaborator',
+                    'createdTime',
+                    'date',
+                    'linkToAnotherRecord',
+                    'longText',
+                    'multipleSelect',
+                    'number',
+                    'singleLineText',
+                    'singleSelect',
+                    'updatedTime'
+                ])
+            })
+        ),
+        fieldVisibility: PropTypes.arrayOf(
+            PropTypes.string.isRequired
+        )
+    }
+
+    static defaultProps = {
+        fieldVisibility: []
+    }
+
+    static calculateRecordHeight({coverFieldId, fields, fieldVisibility}) {
+
+        const fieldsById = fields.reduce((result, field) => {
+            result[field.id] = field
+            return result
+        }, {})
+
+        const fieldHeights = fieldVisibility.map(id => {
+            const field = fieldsById[id]
+            if (!field) throw new Error(`Field with id ${id} not found`)
+            return FIELD_HEIGHTS[field.typeId] + FIELD_WRAP_HEIGHT
+        })
+
+        return sum([
+            coverFieldId ? COVER_FIELD_HEIGHT : 0,
+            PRIMARY_FIELD_HEIGHT,
+            ...fieldHeights,
+            CARD_BOTTOM_PADDING
+        ])
+    }
+
     render() {
 
-        const {primaryFieldId, valueGetter, coverFieldId, fieldConfig, fields = []} = this.props
+        const {primaryFieldId, valueGetter, coverFieldId, fields, fieldVisibility = []} = this.props
 
-        const fieldsById = fieldConfig.reduce((result, field) => {
+        const fieldsById = fields.reduce((result, field) => {
             result[field.id] = field
             return result
         }, {})
@@ -102,7 +166,7 @@ export default class RecordGalleryCard extends React.Component {
                 <RecordTitle>
                     {name}
                 </RecordTitle>
-                {fields.map(id => {
+                {fieldVisibility.map(id => {
 
                     const field = fieldsById[id]
 
@@ -112,7 +176,7 @@ export default class RecordGalleryCard extends React.Component {
 
                     const Field = fieldTypes[field.typeId]
                     const valueParser = valueParsers[field.typeId]
-                    const height = heights[field.typeId]
+                    const height = FIELD_HEIGHTS[field.typeId]
                     const value = valueGetter({fieldId: field.id})
 
                     const props = valueParser(value)
