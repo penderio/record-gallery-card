@@ -1,6 +1,6 @@
 {
   "name": "@cmds/record-gallery-card",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Used for displaying a record as a gallery card.",
   "main": "lib/index.js",
   "module": "es/index.js",

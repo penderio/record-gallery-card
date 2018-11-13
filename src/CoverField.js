@@ -116,7 +116,10 @@ export default class CoverField extends React.Component {
 
     render() {
 
-        const {attachments} = this.props
+        const attachments = this.props.attachments.map(attachment => {
+            return attachment.thumbnails.medium
+        })
+
         const {width, index, hover} = this.state
 
         return (

@@ -24,6 +24,59 @@ see logs for more info
     })
 }
 
+
+const COVER_FIELD_VALUE = [{
+    id: 'att1',
+    mimeType: 'image/jpeg',
+    filename: `Image`,
+    thumbnails: {
+        small: 'https://placekitten.com/400/360?id=1',
+        medium: 'https://placekitten.com/400/360?id=1',
+        large: 'https://placekitten.com/400/360?id=1',
+    },
+    url: 'https://placekitten.com/400/360?id=1'
+}, {
+    id: 'att2',
+    mimeType: 'image/jpeg',
+    filename: `Image`,
+    thumbnails: {
+        small: 'https://placekitten.com/400/360?id=2',
+        medium: 'https://placekitten.com/400/360?id=2',
+        large: 'https://placekitten.com/400/360?id=2',
+    },
+    url: 'https://placekitten.com/400/360?id=2'
+}, {
+    id: 'att3',
+    mimeType: 'image/jpeg',
+    filename: `Image`,
+    thumbnails: {
+        small: 'https://placekitten.com/400/360?id=3',
+        medium: 'https://placekitten.com/400/360?id=3',
+        large: 'https://placekitten.com/400/360?id=3',
+    },
+    url: 'https://placekitten.com/400/360?id=3'
+}, {
+    id: 'att4',
+    mimeType: 'image/jpeg',
+    filename: `Image`,
+    thumbnails: {
+        small: 'https://placekitten.com/400/360?id=4',
+        medium: 'https://placekitten.com/400/360?id=4',
+        large: 'https://placekitten.com/400/360?id=4',
+    },
+    url: 'https://placekitten.com/400/360?id=4'
+}, {
+    id: 'att5',
+    mimeType: 'image/jpeg',
+    filename: `Image`,
+    thumbnails: {
+        small: 'https://placekitten.com/400/360?id=5',
+        medium: 'https://placekitten.com/400/360?id=5',
+        large: 'https://placekitten.com/400/360?id=5',
+    },
+    url: 'https://placekitten.com/400/360?id=5'
+}]
+
 class Viewport extends React.Component {
 
     render() {
@@ -54,7 +107,29 @@ class Demo extends Component {
                         width: 240px;
                     `}
                 >
-                    <RecordGalleryCard/>
+                    <RecordGalleryCard
+                        primaryFieldId={'fld1'}
+                        coverFieldId={null}
+                        fieldConfig={[{
+                            id: 'fld1',
+                            name: 'Name',
+                            typeId: 'singleLineText'
+                        }, {
+                            id: 'fld2',
+                            name: 'Attachments',
+                            typeId: 'attachment'
+                        }]}
+                        valueGetter={({fieldId}) => {
+
+                            const cells = {
+                                fld1: 'Luke Skywalker',
+                                fld2: COVER_FIELD_VALUE
+                            }
+
+                            return cells[fieldId]
+                        }}
+
+                    />
                 </div>
             </Viewport>
             <h3>
@@ -67,7 +142,26 @@ class Demo extends Component {
                     `}
                 >
                     <RecordGalleryCard
-                        enableCoverField={true}
+                        coverFieldId={'fld2'}
+                        primaryFieldId={'fld1'}
+                        fieldConfig={[{
+                            id: 'fld1',
+                            name: 'Name',
+                            typeId: 'singleLineText'
+                        }, {
+                            id: 'fld2',
+                            name: 'Attachments',
+                            typeId: 'attachment'
+                        }]}
+                        valueGetter={({fieldId}) => {
+
+                            const cells = {
+                                fld1: 'Luke Skywalker',
+                                fld2: COVER_FIELD_VALUE
+                            }
+
+                            return cells[fieldId]
+                        }}
                     />
                 </div>
             </Viewport>
@@ -81,9 +175,9 @@ class Demo extends Component {
                     `}
                 >
                     <RecordGalleryCard
-                        enableCoverField={true}
-                        title={'Spock Must Die!'}
-                        fields={[{
+                        coverFieldId={'fld10'}
+                        primaryFieldId={'fld1'}
+                        fieldConfig={[{
                             id: 'fld1',
                             name: 'Name',
                             typeId: 'singleLineText',
@@ -177,79 +271,76 @@ class Demo extends Component {
                             id: 'fld8',
                             name: 'Notes',
                             typeId: 'longText'
+                        }, {
+                            id: 'fld9',
+                            name: 'Description',
+                            typeId: 'singleLineText'
+                        }, {
+                            id: 'fld10',
+                            name: 'Attachments',
+                            typeId: 'attachment'
                         }]}
-                        getValue={({fieldId}) => {
-                            const values = {
-                                'fld1': {
-                                    text: 'Luke Skywalker'
-                                },
-                                'fld2': {
-                                    checked: true
-                                },
-                                'fld3': {
-                                    attachments: [{
-                                        id: '1',
-                                        mimeType: 'video/ogg',
-                                        filename: 'Video',
-                                        thumbnails: null,
-                                        url: 'https://www.w3schools.com/html/mov_bbb.ogg'
-                                    }, {
-                                        id: '2',
-                                        mimeType: 'audio/mpeg',
-                                        filename: 'Audio',
-                                        thumbnails: null,
-                                        url: 'https://dl.airtable.com/AILblIU3RJfJTtudwUE8_%E0%B8%97%E0%B8%B8%E0%B8%81%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97'
-                                    }, {
-                                        id: '3',
-                                        mimeType: 'image/jpeg',
-                                        filename: `Image`,
-                                        thumbnails: {
-                                            small: 'https://placekitten.com/200/300',
-                                            medium: 'https://placekitten.com/200/300',
-                                            large: 'https://placekitten.com/200/300',
-                                        },
-                                        url: 'https://placekitten.com/200/300'
-                                    }, {
-                                        id: '4',
-                                        mimeType: 'image/gif',
-                                        filename: 'GIF',
-                                        thumbnails: {
-                                            small: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif',
-                                            medium: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif',
-                                            large: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif',
-                                        },
-                                        url: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif'
-                                    }]
-                                },
-                                'fld4': {
-                                    number: 32.25
-                                },
-                                'fld5': {
-                                    records: [{
-                                        id: 'rec1',
-                                        name: 'Luke Skywalker'
-                                    }, {
-                                        id: 'rec2',
-                                        name: 'Leia Organa'
-                                    }, {
-                                        id: 'rec3',
-                                        name: 'Han Solo'
-                                    }, {
-                                        id: 'rec4',
-                                        name: 'Jar Jar Binks'
-                                    }]
-                                },
-                                'fld6': {
-                                    optionIds: ['opt1', 'opt2', 'opt3', 'opt4', 'opt5', 'opt6']
-                                },
-                                'fld7': {
-                                    optionId: 'opt5'
-                                },
-                                'fld8': {
-                                    longText: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-                                }
+                        fields={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9', 'fld10']}
+                        valueGetter={({fieldId}) => {
+
+                            const cells = {
+                                'fld1': 'Luke Skywalker',
+                                'fld2': true,
+                                'fld3': [{
+                                    id: '1',
+                                    mimeType: 'video/ogg',
+                                    filename: 'Video',
+                                    thumbnails: null,
+                                    url: 'https://www.w3schools.com/html/mov_bbb.ogg'
+                                }, {
+                                    id: '2',
+                                    mimeType: 'audio/mpeg',
+                                    filename: 'Audio',
+                                    thumbnails: null,
+                                    url: 'https://dl.airtable.com/AILblIU3RJfJTtudwUE8_%E0%B8%97%E0%B8%B8%E0%B8%81%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97'
+                                }, {
+                                    id: '3',
+                                    mimeType: 'image/jpeg',
+                                    filename: `Image`,
+                                    thumbnails: {
+                                        small: 'https://placekitten.com/200/300',
+                                        medium: 'https://placekitten.com/200/300',
+                                        large: 'https://placekitten.com/200/300',
+                                    },
+                                    url: 'https://placekitten.com/200/300'
+                                }, {
+                                    id: '4',
+                                    mimeType: 'image/gif',
+                                    filename: 'GIF',
+                                    thumbnails: {
+                                        small: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif',
+                                        medium: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif',
+                                        large: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif',
+                                    },
+                                    url: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif'
+                                }],
+                                'fld4': 32.25,
+                                'fld5': [{
+                                    id: 'rec1',
+                                    name: 'Luke Skywalker'
+                                }, {
+                                    id: 'rec2',
+                                    name: 'Leia Organa'
+                                }, {
+                                    id: 'rec3',
+                                    name: 'Han Solo'
+                                }, {
+                                    id: 'rec4',
+                                    name: 'Jar Jar Binks'
+                                }],
+                                'fld6': ['opt1', 'opt2', 'opt3', 'opt4', 'opt5', 'opt6'],
+                                'fld7': 'opt5',
+                                'fld8': `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+                                'fld9': 'Greatest Jedi the galaxy has ever known.',
+                                'fld10': COVER_FIELD_VALUE
                             }
-                            return values[fieldId]
+
+                            return cells[fieldId]
                         }}
                     />
                 </div>

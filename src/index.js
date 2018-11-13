@@ -22,22 +22,30 @@ const fieldTypes = {
     attachment: AttachmentField
 }
 
-const connectors = {
-    longText: ({longText}) => ({
-        value: longText
+const valueParsers = {
+    longText: value => ({
+        value
     }),
-    singleSelect: value => value,
-    multipleSelect: value => value,
-    checkbox: ({checked}) => ({
-        value: checked
+    singleSelect: value => ({
+        optionId: value
     }),
-    singleLineText: ({text}) => ({
-        value: text
+    multipleSelect: value => ({
+        optionIds: value
     }),
-    attachment: value => value,
-    linkToAnotherRecord: value => value,
-    number: ({number}) => ({
-        value: number
+    checkbox: value => ({
+        value
+    }),
+    singleLineText: value => ({
+        value
+    }),
+    attachment: value => ({
+        attachments: value
+    }),
+    linkToAnotherRecord: value => ({
+        records: value
+    }),
+    number: value => ({
+        value
     })
 }
 
@@ -63,7 +71,15 @@ export default class RecordGalleryCard extends React.Component {
 
     render() {
 
-        const {enableCoverField, fields} = this.props
+        const {primaryFieldId, valueGetter, coverFieldId, fieldConfig, fields = []} = this.props
+
+        const fieldsById = fieldConfig.reduce((result, field) => {
+            result[field.id] = field
+            return result
+        }, {})
+
+        const name = valueGetter({fieldId: primaryFieldId})
+        const coverFieldCell = valueGetter({fieldId: coverFieldId})
 
         return (
             <div
@@ -78,30 +94,28 @@ export default class RecordGalleryCard extends React.Component {
                     padding-bottom: 10px;
                 `}
             >
-                {enableCoverField ? (
+                {coverFieldCell ? (
                     <CoverField
-                        attachments={[
-                            'https://placekitten.com/400/360?id=5',
-                            'https://placekitten.com/400/360?id=4',
-                            'https://placekitten.com/400/360?id=3',
-                            'https://placekitten.com/400/360?id=2',
-                            'https://placekitten.com/400/360?id=1'
-                        ]}
+                        attachments={coverFieldCell}
                     />
                 ) : null}
                 <RecordTitle>
-                    Record A
+                    {name}
                 </RecordTitle>
-                {fields && fields.length ? fields.map(field => {
+                {fields.map(id => {
+
+                    const field = fieldsById[id]
+
+                    if (!field) {
+                        throw new Error(`Field with id ${id} not found`)
+                    }
 
                     const Field = fieldTypes[field.typeId]
-                    const connector = connectors[field.typeId]
+                    const valueParser = valueParsers[field.typeId]
                     const height = heights[field.typeId]
-                    const value = this.props.getValue({
-                        fieldId: field.id
-                    })
+                    const value = valueGetter({fieldId: field.id})
 
-                    const props = connector(value)
+                    const props = valueParser(value)
 
                     return (
                         <div
@@ -152,7 +166,7 @@ export default class RecordGalleryCard extends React.Component {
                             </div>
                         </div>
                     )
-                }) : null}
+                })}
             </div>
         )
     }
