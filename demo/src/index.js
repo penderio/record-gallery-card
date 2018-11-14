@@ -30,9 +30,15 @@ const COVER_FIELD_VALUE = [{
     mimeType: 'image/jpeg',
     filename: `Image`,
     thumbnails: {
-        small: 'https://placekitten.com/400/360?id=1',
-        medium: 'https://placekitten.com/400/360?id=1',
-        large: 'https://placekitten.com/400/360?id=1',
+        small: {
+            url: 'https://placekitten.com/400/360?id=1'
+        },
+        medium: {
+            url: 'https://placekitten.com/400/360?id=1'
+        },
+        large: {
+            url: 'https://placekitten.com/400/360?id=1'
+        },
     },
     url: 'https://placekitten.com/400/360?id=1'
 }, {
@@ -40,9 +46,15 @@ const COVER_FIELD_VALUE = [{
     mimeType: 'image/jpeg',
     filename: `Image`,
     thumbnails: {
-        small: 'https://placekitten.com/400/360?id=2',
-        medium: 'https://placekitten.com/400/360?id=2',
-        large: 'https://placekitten.com/400/360?id=2',
+        small: {
+            url: 'https://placekitten.com/400/360?id=2'
+        },
+        medium: {
+            url: 'https://placekitten.com/400/360?id=2'
+        },
+        large: {
+            url: 'https://placekitten.com/400/360?id=2'
+        },
     },
     url: 'https://placekitten.com/400/360?id=2'
 }, {
@@ -50,9 +62,15 @@ const COVER_FIELD_VALUE = [{
     mimeType: 'image/jpeg',
     filename: `Image`,
     thumbnails: {
-        small: 'https://placekitten.com/400/360?id=3',
-        medium: 'https://placekitten.com/400/360?id=3',
-        large: 'https://placekitten.com/400/360?id=3',
+        small: {
+            url: 'https://placekitten.com/400/360?id=3'
+        },
+        medium: {
+            url: 'https://placekitten.com/400/360?id=3'
+        },
+        large: {
+            url: 'https://placekitten.com/400/360?id=3'
+        },
     },
     url: 'https://placekitten.com/400/360?id=3'
 }, {
@@ -60,9 +78,15 @@ const COVER_FIELD_VALUE = [{
     mimeType: 'image/jpeg',
     filename: `Image`,
     thumbnails: {
-        small: 'https://placekitten.com/400/360?id=4',
-        medium: 'https://placekitten.com/400/360?id=4',
-        large: 'https://placekitten.com/400/360?id=4',
+        small: {
+            url: 'https://placekitten.com/400/360?id=4'
+        },
+        medium: {
+            url: 'https://placekitten.com/400/360?id=4'
+        },
+        large: {
+            url: 'https://placekitten.com/400/360?id=4'
+        },
     },
     url: 'https://placekitten.com/400/360?id=4'
 }, {
@@ -70,9 +94,15 @@ const COVER_FIELD_VALUE = [{
     mimeType: 'image/jpeg',
     filename: `Image`,
     thumbnails: {
-        small: 'https://placekitten.com/400/360?id=5',
-        medium: 'https://placekitten.com/400/360?id=5',
-        large: 'https://placekitten.com/400/360?id=5',
+        small: {
+            url: 'https://placekitten.com/400/360?id=5'
+        },
+        medium: {
+            url: 'https://placekitten.com/400/360?id=5'
+        },
+        large: {
+            url: 'https://placekitten.com/400/360?id=5'
+        },
     },
     url: 'https://placekitten.com/400/360?id=5'
 }]
@@ -303,9 +333,15 @@ class Demo extends Component {
                                     mimeType: 'image/jpeg',
                                     filename: `Image`,
                                     thumbnails: {
-                                        small: 'https://placekitten.com/200/300',
-                                        medium: 'https://placekitten.com/200/300',
-                                        large: 'https://placekitten.com/200/300',
+                                        small: {
+                                            url: 'https://placekitten.com/200/300'
+                                        },
+                                        medium: {
+                                            url: 'https://placekitten.com/200/300'
+                                        },
+                                        large: {
+                                            url: 'https://placekitten.com/200/300'
+                                        },
                                     },
                                     url: 'https://placekitten.com/200/300'
                                 }, {
@@ -313,9 +349,15 @@ class Demo extends Component {
                                     mimeType: 'image/gif',
                                     filename: 'GIF',
                                     thumbnails: {
-                                        small: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif',
-                                        medium: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif',
-                                        large: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif',
+                                        small: {
+                                            url: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif'
+                                        },
+                                        medium: {
+                                            url: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif'
+                                        },
+                                        large: {
+                                            url: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif'
+                                        },
                                     },
                                     url: 'https://media.giphy.com/media/1wqqlaQ7IX3TXibXZE/giphy.gif'
                                 }],
