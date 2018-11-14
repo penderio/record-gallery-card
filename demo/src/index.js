@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+import sample from 'lodash/sample'
 import {css, injectGlobal} from 'emotion'
 
 import RecordGalleryCard from '../../src'
@@ -24,88 +25,36 @@ see logs for more info
     })
 }
 
+const generateAttachment = (i) => {
 
-const COVER_FIELD_VALUE = [{
-    id: 'att1',
-    mimeType: 'image/jpeg',
-    filename: `Image`,
-    thumbnails: {
-        small: {
-            url: 'https://placekitten.com/400/360?id=1'
+    const cat = sample(['wanderlust', 'water', 'canada', 'mountain', 'beach'])
+
+    return {
+        id: `att${i}`,
+        type: 'image/jpeg',
+        filename: `${cat} ${i}`,
+        thumbnails: {
+            small: {
+                url: `https://source.unsplash.com/random/400x360?${cat}`
+            },
+            medium: {
+                url: `https://source.unsplash.com/random/400x360?${cat}`
+            },
+            large: {
+                url: `https://source.unsplash.com/random/400x360?${cat}`
+            },
         },
-        medium: {
-            url: 'https://placekitten.com/400/360?id=1'
-        },
-        large: {
-            url: 'https://placekitten.com/400/360?id=1'
-        },
-    },
-    url: 'https://placekitten.com/400/360?id=1'
-}, {
-    id: 'att2',
-    mimeType: 'image/jpeg',
-    filename: `Image`,
-    thumbnails: {
-        small: {
-            url: 'https://placekitten.com/400/360?id=2'
-        },
-        medium: {
-            url: 'https://placekitten.com/400/360?id=2'
-        },
-        large: {
-            url: 'https://placekitten.com/400/360?id=2'
-        },
-    },
-    url: 'https://placekitten.com/400/360?id=2'
-}, {
-    id: 'att3',
-    mimeType: 'image/jpeg',
-    filename: `Image`,
-    thumbnails: {
-        small: {
-            url: 'https://placekitten.com/400/360?id=3'
-        },
-        medium: {
-            url: 'https://placekitten.com/400/360?id=3'
-        },
-        large: {
-            url: 'https://placekitten.com/400/360?id=3'
-        },
-    },
-    url: 'https://placekitten.com/400/360?id=3'
-}, {
-    id: 'att4',
-    mimeType: 'image/jpeg',
-    filename: `Image`,
-    thumbnails: {
-        small: {
-            url: 'https://placekitten.com/400/360?id=4'
-        },
-        medium: {
-            url: 'https://placekitten.com/400/360?id=4'
-        },
-        large: {
-            url: 'https://placekitten.com/400/360?id=4'
-        },
-    },
-    url: 'https://placekitten.com/400/360?id=4'
-}, {
-    id: 'att5',
-    mimeType: 'image/jpeg',
-    filename: `Image`,
-    thumbnails: {
-        small: {
-            url: 'https://placekitten.com/400/360?id=5'
-        },
-        medium: {
-            url: 'https://placekitten.com/400/360?id=5'
-        },
-        large: {
-            url: 'https://placekitten.com/400/360?id=5'
-        },
-    },
-    url: 'https://placekitten.com/400/360?id=5'
-}]
+        url: `https://source.unsplash.com/random/400x360?${cat}`
+    }
+}
+
+const COVER_FIELD_VALUE = [
+    generateAttachment(1),
+    generateAttachment(2),
+    generateAttachment(3),
+    generateAttachment(4),
+    generateAttachment(5),
+]
 
 class Viewport extends React.Component {
 
@@ -139,6 +88,7 @@ class Demo extends Component {
                 >
                     <RecordGalleryCard
                         primaryFieldId={'fld1'}
+                        coverFitTypeId={'cover'}
                         coverFieldId={null}
                         fields={[{
                             id: 'fld1',
@@ -163,6 +113,112 @@ class Demo extends Component {
                 </div>
             </Viewport>
             <h3>
+                Cover field with no attachments
+            </h3>
+            <Viewport>
+                <div
+                    className={css`
+                        width: 240px;
+                    `}
+                >
+                    <RecordGalleryCard
+                        coverFitTypeId={'cover'}
+                        coverFieldId={'fld2'}
+                        primaryFieldId={'fld1'}
+                        fields={[{
+                            id: 'fld1',
+                            name: 'Name',
+                            typeId: 'singleLineText'
+                        }, {
+                            id: 'fld2',
+                            name: 'Attachments',
+                            typeId: 'attachment'
+                        }]}
+                        valueGetter={({fieldId}) => {
+
+                            const cells = {
+                                fld1: 'Luke Skywalker',
+                                fld2: null
+                            }
+
+                            return cells[fieldId]
+                        }}
+                    />
+                </div>
+            </Viewport>
+            <h3>
+                Cover field with one attachment
+            </h3>
+            <Viewport>
+                <div
+                    className={css`
+                        width: 240px;
+                    `}
+                >
+                    <RecordGalleryCard
+                        coverFitTypeId={'cover'}
+                        coverFieldId={'fld2'}
+                        primaryFieldId={'fld1'}
+                        fields={[{
+                            id: 'fld1',
+                            name: 'Name',
+                            typeId: 'singleLineText'
+                        }, {
+                            id: 'fld2',
+                            name: 'Attachments',
+                            typeId: 'attachment'
+                        }]}
+                        valueGetter={({fieldId}) => {
+
+                            const cells = {
+                                fld1: 'Luke Skywalker',
+                                fld2: [
+                                    generateAttachment(1)
+                                ]
+                            }
+
+                            return cells[fieldId]
+                        }}
+                    />
+                </div>
+            </Viewport>
+            <h3>
+                Cover field with coverFitTypeId set to fit
+            </h3>
+            <Viewport>
+                <div
+                    className={css`
+                        width: 240px;
+                    `}
+                >
+                    <RecordGalleryCard
+                        coverFitTypeId={'fit'}
+                        coverFieldId={'fld2'}
+                        primaryFieldId={'fld1'}
+                        fields={[{
+                            id: 'fld1',
+                            name: 'Name',
+                            typeId: 'singleLineText'
+                        }, {
+                            id: 'fld2',
+                            name: 'Attachments',
+                            typeId: 'attachment'
+                        }]}
+                        valueGetter={({fieldId}) => {
+
+                            const cells = {
+                                fld1: 'Luke Skywalker',
+                                fld2: [
+                                    generateAttachment(1)
+                                ]
+                            }
+
+                            return cells[fieldId]
+                        }}
+                    />
+                </div>
+            </Viewport>
+            <h3>
                 Cover field & no fields
             </h3>
             <Viewport>
@@ -172,6 +228,7 @@ class Demo extends Component {
                     `}
                 >
                     <RecordGalleryCard
+                        coverFitTypeId={'cover'}
                         coverFieldId={'fld2'}
                         primaryFieldId={'fld1'}
                         fields={[{
@@ -205,6 +262,7 @@ class Demo extends Component {
                     `}
                 >
                     <RecordGalleryCard
+                        coverFitTypeId={'cover'}
                         coverFieldId={'fld10'}
                         primaryFieldId={'fld1'}
                         fields={[{
@@ -227,9 +285,9 @@ class Demo extends Component {
                             name: 'Revenue',
                             typeId: 'number',
                             options: {
-                                numberFormat: 'decimal',
+                                numberFormatId: 'decimal',
                                 allowNegativeNumbers: false,
-                                precision: 2
+                                precisionId: '2'
                             }
                         }, {
                             id: 'fld5',
@@ -240,62 +298,80 @@ class Demo extends Component {
                             name: 'Colors',
                             typeId: 'multipleSelect',
                             options: {
-                                options: [{
-                                    id: 'opt1',
-                                    colorId: 'blue.base',
-                                    name: 'Blue'
-                                }, {
-                                    id: 'opt2',
-                                    colorId: 'green.base',
-                                    name: 'Green'
-                                }, {
-                                    id: 'opt3',
-                                    colorId: 'red.base',
-                                    name: 'Red'
-                                }, {
-                                    id: 'opt4',
-                                    colorId: 'yellow.base',
-                                    name: 'Yellow'
-                                }, {
-                                    id: 'opt5',
-                                    colorId: 'indigo.base',
-                                    name: 'Indigo'
-                                }, {
-                                    id: 'opt6',
-                                    colorId: 'purple.base',
-                                    name: 'Purple'
-                                }]
+                                coloredOptions: true,
+                                options: ['opt1', 'opt2', 'opt3', 'opt4', 'opt5', 'opt6'],
+                                optionsById: {
+                                    'opt1': {
+                                        id: 'opt1',
+                                        colorId: 'blue.base',
+                                        name: 'Blue'
+                                    },
+                                    'opt2': {
+                                        id: 'opt2',
+                                        colorId: 'green.base',
+                                        name: 'Green'
+                                    },
+                                    'opt3': {
+                                        id: 'opt3',
+                                        colorId: 'red.base',
+                                        name: 'Red'
+                                    },
+                                    'opt4': {
+                                        id: 'opt4',
+                                        colorId: 'yellow.base',
+                                        name: 'Yellow'
+                                    },
+                                    'opt5': {
+                                        id: 'opt5',
+                                        colorId: 'indigo.base',
+                                        name: 'Indigo'
+                                    },
+                                    'opt6': {
+                                        id: 'opt6',
+                                        colorId: 'purple.base',
+                                        name: 'Purple'
+                                    }
+                                }
                             }
                         }, {
                             id: 'fld7',
                             name: 'Color',
                             typeId: 'singleSelect',
                             options: {
-                                options: [{
-                                    id: 'opt1',
-                                    colorId: 'blue.base',
-                                    name: 'Blue'
-                                }, {
-                                    id: 'opt2',
-                                    colorId: 'green.base',
-                                    name: 'Green'
-                                }, {
-                                    id: 'opt3',
-                                    colorId: 'red.base',
-                                    name: 'Red'
-                                }, {
-                                    id: 'opt4',
-                                    colorId: 'yellow.base',
-                                    name: 'Yellow'
-                                }, {
-                                    id: 'opt5',
-                                    colorId: 'indigo.base',
-                                    name: 'Indigo'
-                                }, {
-                                    id: 'opt6',
-                                    colorId: 'purple.base',
-                                    name: 'Purple'
-                                }]
+                                coloredOptions: true,
+                                options: ['opt1', 'opt2', 'opt3', 'opt4', 'opt5', 'opt6'],
+                                optionsById: {
+                                    'opt1': {
+                                        id: 'opt1',
+                                        colorId: 'blue.base',
+                                        name: 'Blue'
+                                    },
+                                    'opt2': {
+                                        id: 'opt2',
+                                        colorId: 'green.base',
+                                        name: 'Green'
+                                    },
+                                    'opt3': {
+                                        id: 'opt3',
+                                        colorId: 'red.base',
+                                        name: 'Red'
+                                    },
+                                    'opt4': {
+                                        id: 'opt4',
+                                        colorId: 'yellow.base',
+                                        name: 'Yellow'
+                                    },
+                                    'opt5': {
+                                        id: 'opt5',
+                                        colorId: 'indigo.base',
+                                        name: 'Indigo'
+                                    },
+                                    'opt6': {
+                                        id: 'opt6',
+                                        colorId: 'purple.base',
+                                        name: 'Purple'
+                                    }
+                                }
                             }
                         }, {
                             id: 'fld8',
@@ -317,36 +393,20 @@ class Demo extends Component {
                                 'fld1': 'Luke Skywalker',
                                 'fld2': true,
                                 'fld3': [{
-                                    id: '1',
-                                    mimeType: 'video/ogg',
+                                    id: 'att1',
+                                    type: 'video/ogg',
                                     filename: 'Video',
                                     thumbnails: null,
                                     url: 'https://www.w3schools.com/html/mov_bbb.ogg'
                                 }, {
-                                    id: '2',
-                                    mimeType: 'audio/mpeg',
+                                    id: 'att2',
+                                    type: 'audio/mpeg',
                                     filename: 'Audio',
                                     thumbnails: null,
                                     url: 'https://dl.airtable.com/AILblIU3RJfJTtudwUE8_%E0%B8%97%E0%B8%B8%E0%B8%81%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97'
-                                }, {
-                                    id: '3',
-                                    mimeType: 'image/jpeg',
-                                    filename: `Image`,
-                                    thumbnails: {
-                                        small: {
-                                            url: 'https://placekitten.com/200/300'
-                                        },
-                                        medium: {
-                                            url: 'https://placekitten.com/200/300'
-                                        },
-                                        large: {
-                                            url: 'https://placekitten.com/200/300'
-                                        },
-                                    },
-                                    url: 'https://placekitten.com/200/300'
-                                }, {
-                                    id: '4',
-                                    mimeType: 'image/gif',
+                                }, generateAttachment(3), {
+                                    id: 'att4',
+                                    type: 'image/gif',
                                     filename: 'GIF',
                                     thumbnails: {
                                         small: {

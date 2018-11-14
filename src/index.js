@@ -79,6 +79,7 @@ export default class RecordGalleryCard extends React.Component {
     static propTypes = {
         primaryFieldId: PropTypes.string.isRequired,
         coverFieldId: PropTypes.string,
+        coverFitTypeId: PropTypes.oneOf(['cover', 'fit']),
         valueGetter: PropTypes.func.isRequired,
         fields: PropTypes.arrayOf(
             PropTypes.shape({
@@ -135,7 +136,7 @@ export default class RecordGalleryCard extends React.Component {
 
     render() {
 
-        const {primaryFieldId, valueGetter, coverFieldId, fields, fieldVisibility = []} = this.props
+        const {primaryFieldId, valueGetter, coverFieldId, fields, coverFitTypeId, fieldVisibility = []} = this.props
 
         const fieldsById = fields.reduce((result, field) => {
             result[field.id] = field
@@ -158,8 +159,9 @@ export default class RecordGalleryCard extends React.Component {
                     padding-bottom: 10px;
                 `}
             >
-                {coverFieldCell ? (
+                {coverFieldId ? (
                     <CoverField
+                        coverFitTypeId={coverFitTypeId}
                         attachments={coverFieldCell}
                     />
                 ) : null}

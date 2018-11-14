@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {css} from 'emotion'
 import times from 'lodash/times'
+import icons from './icons'
 
 const AttachmentContainer = ({children, innerWidth, offset}) => (
     <div
@@ -31,12 +32,13 @@ const AttachmentContainer = ({children, innerWidth, offset}) => (
     </div>
 )
 
-const Attachment = ({url, width}) => (
+const Attachment = ({url, width, coverFitTypeId}) => (
     <div
         className={css`
             height: 180px;
             overflow: hidden;
-            background-size: cover;
+            background-position: center center;
+            background-size: ${coverFitTypeId === 'cover' ? 'cover' : 'contain'};
             background-repeat: no-repeat;
             background-image: url(${url});
         `}
@@ -116,9 +118,7 @@ export default class CoverField extends React.Component {
 
     render() {
 
-        const attachments = this.props.attachments.map(attachment => {
-            return attachment.thumbnails.medium.url
-        })
+        const {coverFitTypeId, attachments} = this.props
 
         const {width, index, hover} = this.state
 
@@ -128,36 +128,65 @@ export default class CoverField extends React.Component {
                     width: 100%;
                     height: 180px;
                     position: relative;
+                    background-color: #f9f9f9;
                 `}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
                 onMouseMove={this.handleMouseMove}
             >
-                <AttachmentContainer
-                    offset={index * width}
-                    innerWidth={attachments.length * width}
-                >
-                    {attachments.map((attachment, index) => (
-                        <Attachment
-                            key={index}
-                            url={attachment}
-                            width={width}
-                        />
-                    ))}
-                </AttachmentContainer>
-                {attachments.map((attachment, index) => (
-                    <link key={index} rel={'prefetch'} href={attachment}/>
-                ))}
-                <Indicators
-                    active={hover}
-                    index={index}
-                    total={attachments.length}
-                />
+                {attachments && attachments.length ? (
+                    <div
+                        className={css`
+                            width: 100%;
+                            height: 100%;
+                        `}
+                    >
+                        <AttachmentContainer
+                            offset={index * width}
+                            innerWidth={attachments.length * width}
+                        >
+                            {attachments.map((attachment, index) => (
+                                <Attachment
+                                    key={index}
+                                    url={attachment.thumbnails.medium.url}
+                                    width={width}
+                                    coverFitTypeId={coverFitTypeId}
+                                />
+                            ))}
+                        </AttachmentContainer>
+                        {attachments.map((attachment, index) => (
+                            <link key={index} rel={'prefetch'} href={attachment}/>
+                        ))}
+                        {attachments.length > 1 ? (
+                            <Indicators
+                                active={hover}
+                                index={index}
+                                total={attachments.length}
+                            />
+                        ) : null}
+                    </div>
+                ) : (
+                    <div
+                        className={css`
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        `}
+                    >
+                        {icons.image({width: 100, color: '#f0f0f0'})}
+                    </div>
+                )}
             </div>
         )
     }
 
     handleMouseEnter = () => {
+
+        if (!this.props.attachments) return
+        if (this.props.attachments.length < 2) return
+
         this.setState({
             hover: true
         })
