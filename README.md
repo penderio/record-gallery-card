@@ -31,7 +31,7 @@ import SingleLineTextField from '@cmds/single-line-text-field'
 // import all other fields that need to be supported...
 
 const renderers = {
-    singleLineText: ({}) => (
+    singleLineText: ({props}) => (
         <SingleLineTextField
             {...props}
             text={'Luke Skywalker'}
