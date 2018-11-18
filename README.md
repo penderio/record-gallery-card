@@ -4,6 +4,8 @@
 
 Used for displaying a record as a gallery card.	
 
+![RecordGalleryCard](https://user-images.githubusercontent.com/44947294/48668890-51e64780-eb2a-11e8-8ee8-152d780be21e.png)
+
 ## Getting started
 
 ````
