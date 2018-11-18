@@ -21,9 +21,9 @@ npm install @cmds/record-gallery-card --save
 | coverAttachments | Array | | Each attachment be displayed in a the card's cover as a carousel |
 | coverFitTypeId | CoverFitType | | Either `crop` or `fit`. The images inside the cover will be either covered or contained, respectively |
 | coverEnabled | Boolean | ✓ | Whether the cover should be displayed or not |
-| fields | Array | ✓ | Single line of text to be displayed / edited |
+| fields | Array | ✓ | List of field objects containing the name and more information for each field. |
 | visibleFieldOrder | Array | ✓ | A list of ids for the fields that need to be displayed and in which order |
-| fieldHeightGetter | Function | ✓ | Responsible for returning the height for the field |
+| fieldHeightGetter | Function | ✓ | Responsible for returning the height for the field: `({field: object}): number` |
 | fieldRenderer | Function | ✓ | Responsible for rendering a field given it's configuration: `({recordId: string, index: number, field: object}): jsx` [Learn more](#fieldRenderer) |
 
 #### fieldRenderer
