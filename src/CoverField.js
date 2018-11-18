@@ -122,6 +122,8 @@ export default class CoverField extends React.Component {
 
         const {width, index, hover} = this.state
 
+        const attachEvents = attachments && attachments.length > 1
+
         return (
             <div
                 className={css`
@@ -132,9 +134,9 @@ export default class CoverField extends React.Component {
                 style={{
                     height
                 }}
-                onMouseEnter={this.handleMouseEnter}
-                onMouseLeave={this.handleMouseLeave}
-                onMouseMove={this.handleMouseMove}
+                onMouseEnter={attachEvents ? this.handleMouseEnter : null}
+                onMouseLeave={attachEvents ? this.handleMouseLeave : null}
+                onMouseMove={attachEvents ? this.handleMouseMove : null}
             >
                 {attachments && attachments.length ? (
                     <div

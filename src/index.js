@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {css, cx} from 'emotion'
 import CoverField from './CoverField'
 import RecordTitle from './RecordTitle'
+import calculateCardHeight from './utils/calculateCardHeight'
 
 const PRIMARY_FIELD_HEIGHT = 32
 const FIELD_WRAP_HEIGHT = 31 // spacing around a field
@@ -14,7 +15,7 @@ const THUMBNAIL_SHAPE = PropTypes.shape({
     url: PropTypes.string.isRequired
 })
 
-export default class RecordGalleryCard extends React.Component {
+class RecordGalleryCard extends React.Component {
 
     static propTypes = {
         id: PropTypes.string.isRequired,
@@ -186,3 +187,7 @@ export default class RecordGalleryCard extends React.Component {
         )
     }
 }
+
+RecordGalleryCard.calculateCardHeight = calculateCardHeight
+
+export default RecordGalleryCard
