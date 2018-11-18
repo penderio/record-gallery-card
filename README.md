@@ -14,12 +14,14 @@ npm install @cmds/record-gallery-card --save
 
 | Property | Type | Required? | Description |
 |:---|:---|:---:|:---|
-| recordId | String | ✓ | Unique id for the instance of this record |
-| primaryFieldId | String | ✓ | Used for rendering the value of the primary field as record name |
-| coverFieldId | String | | Each attachment preview from this field will be displayed in a carousel inside the card's header. The carousel will not be shown if no field is set |
-| coverFitTypeId | CoverFitType | ✓ | Either `crop` or `fit`. The images inside the carousel in the card's header will be either covered or contained, respectively  |
+| id | String | ✓ | Unique id for the instance of this record |
+| name | String | ✓ | Name for the record |
+| coverAttachments | Array | | Each attachment be displayed in a the card's cover as a carousel |
+| coverFitTypeId | CoverFitType | | Either `crop` or `fit`. The images inside the cover will be either covered or contained, respectively |
+| coverEnabled | Boolean | ✓ | Whether the cover should be displayed or not |
 | fields | Array | ✓ | Single line of text to be displayed / edited |
 | visibleFieldOrder | Array | ✓ | A list of ids for the fields that need to be displayed and in which order |
+| fieldHeightGetter | Function | ✓ | Responsible for returning the height for the field |
 | fieldRenderer | Function | ✓ | Responsible for rendering a field given it's configuration: `({recordId: string, index: number, field: object}): jsx` [Learn more](#fieldRenderer) |
 
 #### fieldRenderer
@@ -44,7 +46,7 @@ const renderers = {
     // and all other fields that need to be supported
 }
 
-function fieldRenderer({recordId, index, field, props}) {
+function fieldRenderer({id, index, field, props}) {
 
     const renderer = renderers[field.typeId]
     
@@ -65,7 +67,7 @@ function fieldRenderer({recordId, index, field, props}) {
      */
     
     return renderer({ 
-        recordId, 
+        id, 
         field,
         props
     })

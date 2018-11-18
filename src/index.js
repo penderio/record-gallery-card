@@ -1,187 +1,133 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {css} from 'emotion'
-import sum from 'lodash/sum'
+import {css, cx} from 'emotion'
 import CoverField from './CoverField'
 import RecordTitle from './RecordTitle'
-import LinkToAnotherRecordField from '@cmds/link-to-another-record-field'
-import NumberField from '@cmds/number-field'
-import CheckboxField from '@cmds/checkbox-field'
-import SingleLineTextField from '@cmds/single-line-text-field'
-import AttachmentField from '@cmds/attachment-field'
-import MultipleSelectField from '@cmds/multiple-select-field'
-import SingleSelectField from '@cmds/single-select-field'
-import LongTextField from '@cmds/long-text-field'
 
-const COVER_FIELD_HEIGHT = 180
 const PRIMARY_FIELD_HEIGHT = 32
 const FIELD_WRAP_HEIGHT = 31 // spacing around a field
 const CARD_BOTTOM_PADDING = 10
 
-const fieldTypes = {
-    longText: LongTextField,
-    singleSelect: SingleSelectField,
-    multipleSelect: MultipleSelectField,
-    linkToAnotherRecord: LinkToAnotherRecordField,
-    checkbox: CheckboxField,
-    singleLineText: SingleLineTextField,
-    number: NumberField,
-    attachment: AttachmentField
-}
-
-const valueParsers = {
-    longText: value => ({
-        value
-    }),
-    singleSelect: value => ({
-        optionId: value
-    }),
-    multipleSelect: value => ({
-        optionIds: value
-    }),
-    checkbox: value => ({
-        value
-    }),
-    singleLineText: value => ({
-        value
-    }),
-    attachment: value => ({
-        attachments: value
-    }),
-    linkToAnotherRecord: value => ({
-        records: value
-    }),
-    number: value => ({
-        value
-    })
-}
-
-const FIELD_HEIGHTS = {
-    attachment: 30,
-    autonumber: 22,
-    checkbox: 22,
-    multipleCollaborator: 22,
-    collaborator: 22,
-    createdCollaborator: 22,
-    createdTime: 22,
-    date: 22,
-    linkToAnotherRecord: 22,
-    longText: 78,
-    multipleSelect: 22,
-    number: 22,
-    singleLineText: 22,
-    singleSelect: 22,
-    updatedTime: 22
-}
+const THUMBNAIL_SHAPE = PropTypes.shape({
+    height: PropTypes.number,
+    width: PropTypes.number,
+    url: PropTypes.string.isRequired
+})
 
 export default class RecordGalleryCard extends React.Component {
 
     static propTypes = {
-        primaryFieldId: PropTypes.string.isRequired,
-        coverFieldId: PropTypes.string,
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        coverAttachments: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                filename: PropTypes.string.isRequired,
+                size: PropTypes.number,
+                type: PropTypes.oneOf([
+                    'image/jpeg',
+                    'image/jpg',
+                    'image/png',
+                    'image/gif',
+                    'audio/mpeg',
+                    'video/mp4',
+                    'video/ogg'
+                ]).isRequired,
+                thumbnails: PropTypes.shape({
+                    small: THUMBNAIL_SHAPE,
+                    medium: THUMBNAIL_SHAPE,
+                    large: THUMBNAIL_SHAPE,
+                })
+            })
+        ),
         coverFitTypeId: PropTypes.oneOf(['cover', 'fit']),
-        valueGetter: PropTypes.func.isRequired,
+        coverEnabled: PropTypes.bool,
+        coverHeight: PropTypes.number,
         fields: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.string.isRequired,
-                name: PropTypes.string.isRequired,
-                typeId: PropTypes.oneOf([
-                    'attachment',
-                    'autonumber',
-                    'checkbox',
-                    'multipleCollaborator',
-                    'collaborator',
-                    'createdCollaborator',
-                    'createdTime',
-                    'date',
-                    'linkToAnotherRecord',
-                    'longText',
-                    'multipleSelect',
-                    'number',
-                    'singleLineText',
-                    'singleSelect',
-                    'updatedTime'
-                ])
+                name: PropTypes.string.isRequired
             })
         ),
-        fieldVisibility: PropTypes.arrayOf(
+        visibleFieldOrder: PropTypes.arrayOf(
             PropTypes.string.isRequired
-        )
+        ),
+        fieldHeightGetter: PropTypes.func,
+        fieldRenderer: PropTypes.func
     }
 
     static defaultProps = {
-        fieldVisibility: []
-    }
-
-    static calculateRecordHeight({coverFieldId, fields, fieldVisibility}) {
-
-        const fieldsById = fields.reduce((result, field) => {
-            result[field.id] = field
-            return result
-        }, {})
-
-        const fieldHeights = fieldVisibility.map(id => {
-            const field = fieldsById[id]
-            if (!field) throw new Error(`Field with id ${id} not found`)
-            return FIELD_HEIGHTS[field.typeId] + FIELD_WRAP_HEIGHT
-        })
-
-        return sum([
-            coverFieldId ? COVER_FIELD_HEIGHT : 0,
-            PRIMARY_FIELD_HEIGHT,
-            ...fieldHeights,
-            CARD_BOTTOM_PADDING
-        ])
+        visibleFieldOrder: [],
+        coverHeight: 180,
+        coverEnabled: false,
+        coverFitTypeId: 'cover'
     }
 
     render() {
 
-        const {primaryFieldId, valueGetter, coverFieldId, fields, coverFitTypeId, fieldVisibility = []} = this.props
+        const {
+            id,
+            name,
+            fieldRenderer,
+            fieldHeightGetter,
+            coverAttachments,
+            coverEnabled,
+            coverFitTypeId,
+            coverHeight,
+            visibleFieldOrder,
+            onClick
+        } = this.props
 
-        const fieldsById = fields.reduce((result, field) => {
+        const fieldsById = this.props.fields.reduce((result, field) => {
             result[field.id] = field
             return result
         }, {})
 
-        const name = valueGetter({fieldId: primaryFieldId})
-        const coverFieldCell = valueGetter({fieldId: coverFieldId})
+        const fields = visibleFieldOrder.map(id => {
+            return fieldsById[id]
+        })
 
         return (
             <div
-                className={css`
-                    background-color: #fff;
-                    user-select: none;
-                    width: 100%;
-                    cursor: pointer;
-                    border-radius: 6px;
-                    box-shadow: 0 0 0 1px rgba(114,121,133,.3);
-                    overflow: hidden;
-                    padding-bottom: 10px;
-                `}
+                className={cx(
+                    css`
+                        background-color: #fff;
+                        user-select: none;
+                        width: 100%;
+                        cursor: pointer;
+                        border-radius: 6px;
+                        overflow: hidden;
+                        padding-bottom: 10px;
+                        box-shadow: 0 0 0 1px rgba(114,121,133,.3);
+                    `,
+                    onClick ? css`
+                    &:hover {
+                        box-shadow: 0 0 0 1px rgba(114,121,133,.5);
+                    }` : null
+                )}
+                onClick={e => {
+
+                    if (onClick) {
+                        onClick({
+                            e,
+                            id
+                        })
+                    }
+                }}
             >
-                {coverFieldId ? (
+                {coverEnabled ? (
                     <CoverField
                         coverFitTypeId={coverFitTypeId}
-                        attachments={coverFieldCell}
+                        attachments={coverAttachments}
+                        height={coverHeight}
                     />
                 ) : null}
                 <RecordTitle>
                     {name}
                 </RecordTitle>
-                {fieldVisibility.map(id => {
+                {fields.map((field, index) => {
 
-                    const field = fieldsById[id]
-
-                    if (!field) {
-                        throw new Error(`Field with id ${id} not found`)
-                    }
-
-                    const Field = fieldTypes[field.typeId]
-                    const valueParser = valueParsers[field.typeId]
-                    const height = FIELD_HEIGHTS[field.typeId]
-                    const value = valueGetter({fieldId: field.id})
-
-                    const props = valueParser(value)
+                    const height = fieldHeightGetter({field})
 
                     return (
                         <div
@@ -222,13 +168,16 @@ export default class RecordGalleryCard extends React.Component {
                                     height
                                 }}
                             >
-                                <Field
-                                    id={field.id}
-                                    contextId={'recordGalleryCard'}
-                                    roleId={'readOnly'}
-                                    options={field.options}
-                                    {...props}
-                                />
+                                {fieldRenderer({
+                                    id,
+                                    field,
+                                    index,
+                                    props: {
+                                        id: field.id,
+                                        contextId: 'recordGalleryCard',
+                                        roleId: 'readOnly'
+                                    }
+                                })}
                             </div>
                         </div>
                     )

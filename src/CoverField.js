@@ -118,7 +118,7 @@ export default class CoverField extends React.Component {
 
     render() {
 
-        const {coverFitTypeId, attachments} = this.props
+        const {height, coverFitTypeId, attachments} = this.props
 
         const {width, index, hover} = this.state
 
@@ -126,10 +126,12 @@ export default class CoverField extends React.Component {
             <div
                 className={css`
                     width: 100%;
-                    height: 180px;
                     position: relative;
                     background-color: #f9f9f9;
                 `}
+                style={{
+                    height
+                }}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
                 onMouseMove={this.handleMouseMove}
