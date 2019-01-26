@@ -1,5 +1,7 @@
 # RecordGalleryCard
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/entercosmos/record-gallery-card.svg)](https://greenkeeper.io/)
+
 [![npm package][npm-badge]][npm]
 
 Used for displaying a record as a gallery card.	
