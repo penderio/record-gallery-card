@@ -11,6 +11,7 @@ import MultipleSelectField from '@cmds/multiple-select-field'
 import NumberField from '@cmds/number-field'
 import LinkToAnotherRecordField from '@cmds/link-to-another-record-field'
 import RecordGalleryCard from '../../src'
+import {Canvas, Heading, Paragraph, Box} from '@cmds/demo-utils'
 
 injectGlobal`
     * {
@@ -18,6 +19,7 @@ injectGlobal`
     }
     body {
         font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+        margin: 0;   
     }
 `
 
@@ -140,24 +142,6 @@ const fieldRenderer = ({id, field, props}) => {
         cell
     })
 }
-
-class Viewport extends React.Component {
-
-    render() {
-
-        return (
-            <div
-                className={css`
-                    background-color: #e9ebee;
-                    padding: 20px;
-                `}
-            >
-                {this.props.children}
-            </div>
-        )
-    }
-}
-
 
 const FIELDS = [{
     id: 'fld1',
@@ -383,12 +367,11 @@ const fieldHeightGetter = ({field}) => {
 
 class Demo extends Component {
     render() {
-        return <div>
-            <h1>RecordGalleryCard Demo</h1>
-            <h3>
-                No fields & no cover
-            </h3>
-            <Viewport>
+        return <Canvas>
+            <Heading>
+                With cover and multiple fields
+            </Heading>
+            <Box>
                 <div
                     className={css`
                         width: 240px;
@@ -400,16 +383,20 @@ class Demo extends Component {
                             alert(`Clicked the record`)
                         }}
                         name={'Luke Skywalker'}
+                        coverFitTypeId={'cover'}
+                        coverAttachments={COVER_FIELD_VALUE}
+                        coverEnabled={true}
                         fields={FIELDS}
+                        visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
                         fieldRenderer={fieldRenderer}
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
-            </Viewport>
-            <h3>
+            </Box>
+            <Heading>
                 Cover with no attachments
-            </h3>
-            <Viewport>
+            </Heading>
+            <Box>
                 <div
                     className={css`
                         width: 240px;
@@ -428,11 +415,11 @@ class Demo extends Component {
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
-            </Viewport>
-            <h3>
+            </Box>
+            <Heading>
                 Cover with one attachment
-            </h3>
-            <Viewport>
+            </Heading>
+            <Box>
                 <div
                     className={css`
                         width: 240px;
@@ -455,11 +442,11 @@ class Demo extends Component {
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
-            </Viewport>
-            <h3>
-                Cover with coverFitTypeId set to fit
-            </h3>
-            <Viewport>
+            </Box>
+            <Heading>
+                Cover with fit type set to fit
+            </Heading>
+            <Box>
                 <div
                     className={css`
                         width: 240px;
@@ -480,11 +467,11 @@ class Demo extends Component {
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
-            </Viewport>
-            <h3>
-                Cover & no fields
-            </h3>
-            <Viewport>
+            </Box>
+            <Heading>
+                Cover and no fields
+            </Heading>
+            <Box>
                 <div
                     className={css`
                         width: 240px;
@@ -504,11 +491,11 @@ class Demo extends Component {
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
-            </Viewport>
-            <h3>
-                All fields
-            </h3>
-            <Viewport>
+            </Box>
+            <Heading>
+                Without fields and without cover
+            </Heading>
+            <Box>
                 <div
                     className={css`
                         width: 240px;
@@ -520,17 +507,13 @@ class Demo extends Component {
                             alert(`Clicked the record`)
                         }}
                         name={'Luke Skywalker'}
-                        coverFitTypeId={'cover'}
-                        coverAttachments={COVER_FIELD_VALUE}
-                        coverEnabled={true}
                         fields={FIELDS}
-                        visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
                         fieldRenderer={fieldRenderer}
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
-            </Viewport>
-        </div>
+            </Box>
+        </Canvas>
     }
 }
 

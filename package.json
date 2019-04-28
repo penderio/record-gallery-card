@@ -11,7 +11,7 @@
     "umd"
   ],
   "scripts": {
-    "deploy": "cd demo/dist && surge --domain cmds-record-gallery-card.surge.sh",
+    "deploy": "cd demo/dist && surge --project ./ --domain cmds-record-gallery-card.surge.sh",
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
@@ -29,17 +29,18 @@
     "react": "16.x"
   },
   "devDependencies": {
-    "nwb": "0.23.x",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
     "@cmds/attachment-field": "^0.8.0",
     "@cmds/checkbox-field": "^0.3.0",
+    "@cmds/demo-utils": "^0.2.0",
     "@cmds/link-to-another-record-field": "^0.3.0",
     "@cmds/long-text-field": "^0.3.1",
     "@cmds/multiple-select-field": "^0.6.0",
     "@cmds/number-field": "^0.7.0",
     "@cmds/single-line-text-field": "^0.6.0",
-    "@cmds/single-select-field": "^0.5.0"
+    "@cmds/single-select-field": "^0.5.0",
+    "nwb": "0.23.x",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1"
   },
   "author": "",
   "homepage": "",
