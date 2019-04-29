@@ -99,12 +99,16 @@ class RecordGalleryCard extends React.Component {
                         border-radius: 6px;
                         overflow: hidden;
                         padding-bottom: 10px;
-                        box-shadow: 0 0 0 1px rgba(114,121,133,.3);
+                        box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;;
                     `,
                     onClick ? css`
                     &:hover {
-                        box-shadow: 0 0 0 1px rgba(114,121,133,.5);
-                    }` : null
+                        box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 2px 0px;
+                    }
+                    &:active {
+                        box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;;
+                    }
+                    ` : null
                 )}
                 onClick={e => {
 

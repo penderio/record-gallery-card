@@ -1,6 +1,6 @@
 {
   "name": "@cmds/record-gallery-card",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "Used for displaying a record as a gallery card.",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@cmds/attachment-field": "^0.8.0",
     "@cmds/checkbox-field": "^0.3.0",
-    "@cmds/demo-utils": "^0.2.0",
+    "@cmds/demo-utils": "^0.3.0",
     "@cmds/link-to-another-record-field": "^0.3.0",
     "@cmds/long-text-field": "^0.3.1",
     "@cmds/multiple-select-field": "^0.6.0",
