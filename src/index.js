@@ -169,11 +169,16 @@ class RecordGalleryCard extends React.Component {
                                 </div>
                             </div>
                             <div
+                                className={css`
+                                    font-size: 13px;
+                                    display: flex;
+                                    align-items: center;
+                                `}
                                 style={{
                                     height
                                 }}
                             >
-                                {fieldRenderer({
+                               {fieldRenderer({
                                     id,
                                     field,
                                     index,
