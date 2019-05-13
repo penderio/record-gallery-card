@@ -177,10 +177,10 @@
   resolved "https://registry.yarnpkg.com/@pndr/icons/-/icons-0.4.0.tgz#25845027598a7aadebbcb5381beaf6b697b2d747"
   integrity sha512-Edk9RPHY+oQI9ImoTIWWRNOxaqSB9whch9oP/F4JyQj5hH5Ka9iJEmvy3rQTwXYdV8uPBwyj6GG4YGrSO+Faug==
 
-"@pndr/link-to-another-record-field@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@pndr/link-to-another-record-field/-/link-to-another-record-field-0.12.0.tgz#b3eb2c0a026f0f98034e92f7e84edc02bed4c7c0"
-  integrity sha512-dhp578GKA1w2hI9XTTN/43QDkj7NQN8mjMydmSOXLE+GFwrWjYI/ayXg6tP+MFnTTcMTMwFXl48ZvHDag51E9w==
+"@pndr/link-to-another-record-field@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@pndr/link-to-another-record-field/-/link-to-another-record-field-0.13.0.tgz#210b387d76015f4616d8a103cfe571308009d4c6"
+  integrity sha512-dDaHGtIFp8QdGnjRvXNENpMtCiTlD1lqiHzVCvDKTJY6f3S1kkG3hGLeSzBCew3yGtyP/LHmlKyHv0UbmBKvWw==
   dependencies:
     prop-types "^15.7.2"
 

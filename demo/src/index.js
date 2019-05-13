@@ -65,43 +65,47 @@ const COVER_FIELD_VALUE = [
     generateAttachment(5),
 ]
 
-const fieldRenderer = ({ id, field, props }) => {
+const fieldRenderer = empty => ({ id, field, props }) => {
 
     const renderers = {
         singleLineText: ({ props, cell }) => (
             <SingleLineTextField
                 {...props}
-                text={cell.text}
+                text={empty ? null : cell.text}
             />
         ),
         longText: ({ props, cell }) => (
             <LongTextField
                 {...props}
-                longText={cell.longText}
+                longText={empty ? null : cell.longText}
             />
         ),
         checkbox: ({ props, cell }) => (
             <CheckboxField
                 {...props}
-                checked={cell.checked}
+                checked={empty ? null : cell.checked}
             />
         ),
         attachment: ({ props, cell }) => (
             <AttachmentField
                 {...props}
-                attachments={cell.attachments}
+                attachments={empty ? null : cell.attachments}
             />
         ),
         linkToAnotherRecord: ({ props, cell }) => (
             <LinkToAnotherRecordField
                 {...props}
-                records={cell.records}
+                recordCount={empty ? null : cell.records.length}
+                recordGetter={({ index }) => {
+                    return cell.records[index]
+                }}
+                recordRenderer={() => null}
             />
         ),
         multipleSelect: ({ props, field, cell }) => (
             <MultipleSelectField
                 {...props}
-                optionIds={cell.optionIds}
+                optionIds={empty ? null : cell.optionIds}
                 options={field.options.options}
                 optionOrder={field.options.optionOrder}
                 coloredOptions={field.options.coloredOptions}
@@ -110,7 +114,7 @@ const fieldRenderer = ({ id, field, props }) => {
         singleSelect: ({ props, field, cell }) => (
             <SingleSelectField
                 {...props}
-                optionId={cell.optionId}
+                optionId={empty ? null : cell.optionId}
                 options={field.options.options}
                 optionOrder={field.options.optionOrder}
                 coloredOptions={field.options.coloredOptions}
@@ -119,7 +123,7 @@ const fieldRenderer = ({ id, field, props }) => {
         number: ({ props, field, cell }) => (
             <NumberField
                 {...props}
-                number={cell.number}
+                number={empty ? null : cell.number}
                 allowNegativeNumbers={field.options.allowNegativeNumbers}
                 numberFormatId={field.options.numberFormatId}
                 precisionId={field.options.precisionId}
@@ -388,7 +392,32 @@ class Demo extends Component {
                         coverEnabled={true}
                         fields={FIELDS}
                         visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
-                        fieldRenderer={fieldRenderer}
+                        fieldRenderer={fieldRenderer(false)}
+                        fieldHeightGetter={fieldHeightGetter}
+                    />
+                </div>
+            </Box>
+            <Heading>
+                With cover and empty values
+            </Heading>
+            <Box>
+                <div
+                    className={css`
+                        width: 240px;
+                    `}
+                >
+                    <RecordGalleryCard
+                        id={'rec1'}
+                        onClick={({ id }) => {
+                            alert(`Clicked the record`)
+                        }}
+                        name={'Luke Skywalker'}
+                        coverFitTypeId={'cover'}
+                        coverAttachments={COVER_FIELD_VALUE}
+                        coverEnabled={true}
+                        fields={FIELDS}
+                        visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
+                        fieldRenderer={fieldRenderer(true)}
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
@@ -411,7 +440,7 @@ class Demo extends Component {
                         fields={FIELDS}
                         coverEnabled={true}
                         visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
-                        fieldRenderer={fieldRenderer}
+                        fieldRenderer={fieldRenderer(false)}
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
@@ -438,7 +467,7 @@ class Demo extends Component {
                         coverEnabled={true}
                         fields={FIELDS}
                         visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
-                        fieldRenderer={fieldRenderer}
+                        fieldRenderer={fieldRenderer(false)}
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
@@ -463,7 +492,7 @@ class Demo extends Component {
                         coverEnabled={true}
                         fields={FIELDS}
                         visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
-                        fieldRenderer={fieldRenderer}
+                        fieldRenderer={fieldRenderer(false)}
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
@@ -487,7 +516,7 @@ class Demo extends Component {
                         coverAttachments={COVER_FIELD_VALUE}
                         coverEnabled={true}
                         fields={FIELDS}
-                        fieldRenderer={fieldRenderer}
+                        fieldRenderer={fieldRenderer(false)}
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>
@@ -508,7 +537,7 @@ class Demo extends Component {
                         }}
                         name={'Luke Skywalker'}
                         fields={FIELDS}
-                        fieldRenderer={fieldRenderer}
+                        fieldRenderer={fieldRenderer(false)}
                         fieldHeightGetter={fieldHeightGetter}
                     />
                 </div>

@@ -1,6 +1,6 @@
 {
   "name": "@pndr/record-gallery-card",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Used for displaying a record as a gallery card.",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -35,7 +35,7 @@
     "@pndr/colors": "^0.4.0",
     "@pndr/demo-utils": "^0.3.0",
     "@pndr/icons": "^0.4.0",
-    "@pndr/link-to-another-record-field": "^0.12.0",
+    "@pndr/link-to-another-record-field": "0.13.0",
     "@pndr/long-text-field": "^0.9.0",
     "@pndr/multiple-select-field": "^0.10.0",
     "@pndr/number-field": "^0.13.0",
