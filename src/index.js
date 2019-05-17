@@ -1,19 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {css, cx} from 'emotion'
+import { css, cx } from 'emotion'
 import CoverField from './CoverField'
 import RecordTitle from './RecordTitle'
 import calculateCardHeight from './utils/calculateCardHeight'
-
-const PRIMARY_FIELD_HEIGHT = 32
-const FIELD_WRAP_HEIGHT = 31 // spacing around a field
-const CARD_BOTTOM_PADDING = 10
-
-const THUMBNAIL_SHAPE = PropTypes.shape({
-    height: PropTypes.number,
-    width: PropTypes.number,
-    url: PropTypes.string.isRequired
-})
 
 class RecordGalleryCard extends React.Component {
 
@@ -21,27 +11,9 @@ class RecordGalleryCard extends React.Component {
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         coverAttachments: PropTypes.arrayOf(
-            PropTypes.shape({
-                id: PropTypes.string.isRequired,
-                filename: PropTypes.string.isRequired,
-                size: PropTypes.number,
-                type: PropTypes.oneOf([
-                    'image/jpeg',
-                    'image/jpg',
-                    'image/png',
-                    'image/gif',
-                    'audio/mpeg',
-                    'video/mp4',
-                    'video/ogg'
-                ]).isRequired,
-                thumbnails: PropTypes.shape({
-                    small: THUMBNAIL_SHAPE,
-                    medium: THUMBNAIL_SHAPE,
-                    large: THUMBNAIL_SHAPE,
-                })
-            })
+            PropTypes.string.isRequired
         ),
-        coverFitTypeId: PropTypes.oneOf(['cover', 'fit']),
+        coverFitTypeId: PropTypes.oneOf(['crop', 'fit']),
         coverEnabled: PropTypes.bool,
         coverHeight: PropTypes.number,
         fields: PropTypes.arrayOf(
@@ -61,7 +33,7 @@ class RecordGalleryCard extends React.Component {
         visibleFieldOrder: [],
         coverHeight: 180,
         coverEnabled: false,
-        coverFitTypeId: 'cover'
+        coverFitTypeId: 'crop'
     }
 
     render() {
@@ -132,7 +104,7 @@ class RecordGalleryCard extends React.Component {
                 </RecordTitle>
                 {fields.map((field, index) => {
 
-                    const height = fieldHeightGetter({field})
+                    const height = fieldHeightGetter({ field })
 
                     return (
                         <div
@@ -178,7 +150,7 @@ class RecordGalleryCard extends React.Component {
                                     height
                                 }}
                             >
-                               {fieldRenderer({
+                                {fieldRenderer({
                                     id,
                                     field,
                                     index,

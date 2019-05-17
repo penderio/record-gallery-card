@@ -40,7 +40,7 @@ const generateAttachment = (i) => {
 
     return {
         id: `att${i}`,
-        type: 'image/jpeg',
+        typeId: 'image/jpeg',
         filename: `${cat} ${i}`,
         thumbnails: {
             small: {
@@ -57,13 +57,13 @@ const generateAttachment = (i) => {
     }
 }
 
-const COVER_FIELD_VALUE = [
+const coverAttachments = [
     generateAttachment(1),
     generateAttachment(2),
     generateAttachment(3),
     generateAttachment(4),
     generateAttachment(5),
-]
+].map(attachment => attachment.thumbnails.medium.url)
 
 const fieldRenderer = empty => ({ id, field, props }) => {
 
@@ -83,7 +83,7 @@ const fieldRenderer = empty => ({ id, field, props }) => {
         checkbox: ({ props, cell }) => (
             <CheckboxField
                 {...props}
-                checked={empty ? null : cell.checked}
+                checked={cell.checked}
             />
         ),
         attachment: ({ props, cell }) => (
@@ -276,19 +276,19 @@ const CELLS = {
     'fld3': {
         attachments: [{
             id: 'att1',
-            type: 'video/ogg',
+            typeId: 'video/ogg',
             filename: 'Video',
             thumbnails: null,
             url: 'https://www.w3schools.com/html/mov_bbb.ogg'
         }, {
             id: 'att2',
-            type: 'audio/mpeg',
+            typeId: 'audio/mpeg',
             filename: 'Audio',
             thumbnails: null,
             url: 'https://dl.airtable.com/AILblIU3RJfJTtudwUE8_%E0%B8%97%E0%B8%B8%E0%B8%81%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%A0%E0%B8%97'
         }, generateAttachment(3), {
             id: 'att4',
-            type: 'image/gif',
+            typeId: 'image/gif',
             filename: 'GIF',
             thumbnails: {
                 small: {
@@ -387,8 +387,8 @@ class Demo extends Component {
                             alert(`Clicked the record`)
                         }}
                         name={'Luke Skywalker'}
-                        coverFitTypeId={'cover'}
-                        coverAttachments={COVER_FIELD_VALUE}
+                        coverFitTypeId={'crop'}
+                        coverAttachments={coverAttachments}
                         coverEnabled={true}
                         fields={FIELDS}
                         visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
@@ -412,8 +412,8 @@ class Demo extends Component {
                             alert(`Clicked the record`)
                         }}
                         name={'Luke Skywalker'}
-                        coverFitTypeId={'cover'}
-                        coverAttachments={COVER_FIELD_VALUE}
+                        coverFitTypeId={'crop'}
+                        coverAttachments={coverAttachments}
                         coverEnabled={true}
                         fields={FIELDS}
                         visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
@@ -460,9 +460,9 @@ class Demo extends Component {
                             alert(`Clicked the record`)
                         }}
                         name={'Luke Skywalker'}
-                        coverFitTypeId={'cover'}
+                        coverFitTypeId={'crop'}
                         coverAttachments={[
-                            generateAttachment(1)
+                            coverAttachments[0]
                         ]}
                         coverEnabled={true}
                         fields={FIELDS}
@@ -488,7 +488,7 @@ class Demo extends Component {
                         }}
                         name={'Luke Skywalker'}
                         coverFitTypeId={'fit'}
-                        coverAttachments={COVER_FIELD_VALUE}
+                        coverAttachments={coverAttachments}
                         coverEnabled={true}
                         fields={FIELDS}
                         visibleFieldOrder={['fld1', 'fld2', 'fld3', 'fld4', 'fld5', 'fld6', 'fld7', 'fld8', 'fld9']}
@@ -512,8 +512,8 @@ class Demo extends Component {
                             alert(`Clicked the record`)
                         }}
                         name={'Luke Skywalker'}
-                        coverFitTypeId={'cover'}
-                        coverAttachments={COVER_FIELD_VALUE}
+                        coverFitTypeId={'crop'}
+                        coverAttachments={coverAttachments}
                         coverEnabled={true}
                         fields={FIELDS}
                         fieldRenderer={fieldRenderer(false)}

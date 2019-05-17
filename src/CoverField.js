@@ -38,7 +38,7 @@ const Attachment = ({url, width, coverFitTypeId}) => (
             height: 180px;
             overflow: hidden;
             background-position: center center;
-            background-size: ${coverFitTypeId === 'cover' ? 'cover' : 'contain'};
+            background-size: ${coverFitTypeId === 'crop' ? 'cover' : 'contain'};
             background-repeat: no-repeat;
             background-image: url(${url});
         `}
@@ -152,7 +152,7 @@ export default class CoverField extends React.Component {
                             {attachments.map((attachment, index) => (
                                 <Attachment
                                     key={index}
-                                    url={attachment.thumbnails.medium.url}
+                                    url={attachment}
                                     width={width}
                                     coverFitTypeId={coverFitTypeId}
                                 />
@@ -198,13 +198,8 @@ export default class CoverField extends React.Component {
 
     handleMouseMove = (e) => {
 
-        const params = {
-            targetWidth: e.currentTarget.clientWidth,
-            targetOffset: e.currentTarget.offsetLeft,
-            clientOffset: e.nativeEvent.clientX
-        }
-
-        const {targetWidth, targetOffset, clientOffset} = params
+        const {clientX: clientOffset} = e.nativeEvent
+        const {x: targetOffset, width: targetWidth} = e.currentTarget.getBoundingClientRect()
 
         const offset = clientOffset - targetOffset
         const diff = offset / targetWidth
