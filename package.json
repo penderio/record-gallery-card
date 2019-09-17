@@ -1,6 +1,6 @@
 {
   "name": "@pndr/record-gallery-card",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Used for displaying a record as a gallery card.",
   "main": "lib/index.js",
   "module": "es/index.js",

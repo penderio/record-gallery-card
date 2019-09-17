@@ -129,7 +129,7 @@ export default class CoverField extends React.Component {
                 className={css`
                     width: 100%;
                     position: relative;
-                    background-color: #f9f9f9;
+                    background-color: #fff;
                 `}
                 style={{
                     height
