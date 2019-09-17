@@ -1,7 +1,7 @@
 import React from 'react'
-import {css} from 'emotion'
+import { css } from 'emotion'
 
-const RecordTitle = ({children}) => (
+const RecordTitle = ({ variant, children }) => (
     <div
         className={css`
             display: flex;
@@ -14,12 +14,13 @@ const RecordTitle = ({children}) => (
     >
         <div
             className={css`
-                font-weight: 600;
+                ${variant !== 'empty' ? 'font-weight: 600;' : ''}
+                ${variant === 'empty' ? 'font-style: italic;' : ''}
+                ${variant === 'empty' ? 'color: rgba(0,0,0,0.75);' : 'color: #000;'}
                 max-width: 100%;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                color: #000;
                 flex: 1 1 auto;
                 min-width: 0;
                 min-height: 0;

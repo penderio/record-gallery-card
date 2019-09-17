@@ -5,6 +5,12 @@ import CoverField from './CoverField'
 import RecordTitle from './RecordTitle'
 import calculateCardHeight from './utils/calculateCardHeight'
 
+const defaultEmptyNameRenderer = ({ placeholder }) => (
+    <RecordTitle variant={'empty'}>
+        {placeholder}
+    </RecordTitle>
+)
+
 class RecordGalleryCard extends React.Component {
 
     static propTypes = {
@@ -26,14 +32,17 @@ class RecordGalleryCard extends React.Component {
             PropTypes.string.isRequired
         ),
         fieldHeightGetter: PropTypes.func,
-        fieldRenderer: PropTypes.func
+        fieldRenderer: PropTypes.func,
+        emptyNameRenderer: PropTypes.func,
+        emptyNamePlaceholder: PropTypes.string
     }
 
     static defaultProps = {
         visibleFieldOrder: [],
         coverHeight: 180,
         coverEnabled: false,
-        coverFitTypeId: 'crop'
+        coverFitTypeId: 'crop',
+        emptyNamePlaceholder: 'Untitled'
     }
 
     render() {
@@ -48,8 +57,11 @@ class RecordGalleryCard extends React.Component {
             coverFitTypeId,
             coverHeight,
             visibleFieldOrder,
+            emptyNamePlaceholder,
             onClick
         } = this.props
+
+        const emptyNameRenderer = this.props.emptyNameRenderer || defaultEmptyNameRenderer
 
         const fieldsById = this.props.fields.reduce((result, field) => {
             result[field.id] = field
@@ -99,9 +111,13 @@ class RecordGalleryCard extends React.Component {
                         height={coverHeight}
                     />
                 ) : null}
-                <RecordTitle>
-                    {name}
-                </RecordTitle>
+                {name ? (
+                    <RecordTitle>
+                        {name}
+                    </RecordTitle>
+                ) : emptyNameRenderer({
+                    placeholder: emptyNamePlaceholder
+                })}
                 {fields.map((field, index) => {
 
                     const height = fieldHeightGetter({ field })

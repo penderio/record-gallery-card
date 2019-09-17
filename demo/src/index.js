@@ -522,6 +522,30 @@ class Demo extends Component {
                 </div>
             </Box>
             <Heading>
+                Cover and no fields and no name
+            </Heading>
+            <Box>
+                <div
+                    className={css`
+                        width: 240px;
+                    `}
+                >
+                    <RecordGalleryCard
+                        id={'rec1'}
+                        onClick={({ id }) => {
+                            alert(`Clicked the record`)
+                        }}
+                        name={null}
+                        coverFitTypeId={'crop'}
+                        coverAttachments={coverAttachments}
+                        coverEnabled={true}
+                        fields={FIELDS}
+                        fieldRenderer={fieldRenderer(false)}
+                        fieldHeightGetter={fieldHeightGetter}
+                    />
+                </div>
+            </Box>
+            <Heading>
                 Without fields and without cover
             </Heading>
             <Box>
