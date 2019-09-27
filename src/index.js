@@ -159,8 +159,6 @@ class RecordGalleryCard extends React.Component {
                             <div
                                 className={css`
                                     font-size: 13px;
-                                    display: flex;
-                                    align-items: center;
                                 `}
                                 style={{
                                     height

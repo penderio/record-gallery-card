@@ -40,7 +40,7 @@ const Attachment = ({url, width, coverFitTypeId}) => (
             background-position: center center;
             background-size: ${coverFitTypeId === 'crop' ? 'cover' : 'contain'};
             background-repeat: no-repeat;
-            background-image: url(${url});
+            background-image: url('${url}');
         `}
         style={{
             width
